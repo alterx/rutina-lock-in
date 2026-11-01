@@ -54,6 +54,33 @@ const SESSIONS = {
     { id: 'planchalat', pat: 'Core', name: 'Plancha lateral', tech: 'Cuerpo en línea recta. Mantén activos el glúteo medio y los oblicuos.', sets: 3, reps: [30, 30], per: 'lado', kind: 't' },
   ] },
 };
+// Búsquedas de YouTube para ver la técnica (una búsqueda no se rompe si un video desaparece).
+// [etiqueta, búsqueda]; `band` es la búsqueda para hacerlo con liga.
+const VIDEOS = {
+  goblet: { main: [['Ver video', 'goblet squat técnica']], band: 'sentadilla con banda elástica técnica' },
+  rdl: { main: [['Ver video', 'peso muerto rumano con mancuernas técnica']], band: 'peso muerto rumano con banda elástica' },
+  floorpress: { main: [['Ver video', 'floor press con mancuernas técnica']], band: 'press de pecho en el suelo con banda elástica' },
+  remo45: { main: [['Ver video', 'remo inclinado con mancuernas técnica']], band: 'remo inclinado con banda elástica' },
+  hipthrust: { main: [['Ver video', 'hip thrust en el suelo con mancuerna y banda']] },
+  abdsentada: { main: [['Ver video', 'abducción de cadera sentada con banda']] },
+  plancha: { main: [['Ver video', 'plancha frontal técnica correcta']] },
+  bulgara: { main: [['Ver video', 'sentadilla búlgara con mancuernas técnica glúteo']], band: 'sentadilla búlgara con banda elástica' },
+  bstance: { main: [['Ver video', 'b stance rdl con mancuernas técnica']], band: 'b stance rdl con banda elástica' },
+  pressmilitar: { main: [['Ver video', 'press militar arrodillado con mancuernas']], band: 'press de hombro arrodillado con banda elástica' },
+  remouni: { main: [['Remo', 'remo unilateral con mancuerna apoyado técnica'], ['Curl', 'curl de bíceps con mancuernas técnica']], band: 'remo unilateral y curl con banda elástica' },
+  frogpumps: { main: [['Ver video', 'frog pumps glúteo con banda']] },
+  clamshells: { main: [['Ver video', 'clamshell con banda técnica']] },
+  deadbugs: { main: [['Ver video', 'dead bug ejercicio técnica']] },
+  sumo: { main: [['Ver video', 'sentadilla sumo con mancuerna técnica']], band: 'sentadilla sumo con banda elástica' },
+  goodmorning: { main: [['Ver video', 'good morning con banda elástica técnica']] },
+  pushupext: { main: [['Flexiones', 'flexiones de rodillas técnica'], ['Extensión', 'extensión de tríceps tras nuca con mancuerna']], band: 'flexiones con banda y extensión de tríceps con banda elástica' },
+  pullaparts: { main: [['Ver video', 'band pull apart técnica']] },
+  slbridge: { main: [['Ver video', 'puente de glúteo a una pierna técnica']] },
+  legraise: { main: [['Ver video', 'elevación lateral de pierna acostada con banda']] },
+  planchalat: { main: [['Ver video', 'plancha lateral técnica']] },
+};
+const ytSearch = q => 'https://www.youtube.com/results?search_query=' + encodeURIComponent(q);
+
 const ALL_EX = Object.entries(SESSIONS).flatMap(([s, ses]) => ses.ex.map(e => ({ ...e, s: +s })));
 const EX_BY_ID = Object.fromEntries(ALL_EX.map(e => [e.id, e]));
 
@@ -340,6 +367,15 @@ function renderSesion(id) {
     </section>`;
 }
 
+const ICON_PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7.5v9l7.5-4.5z"/></svg>';
+function videoLinks(ex, m) {
+  const v = VIDEOS[ex.id];
+  if (!v) return '';
+  const links = m === 'b' ? [] : [...v.main];
+  if ((m === 'b' || m === 'wb') && v.band) links.push([m === 'b' ? 'Video con liga' : 'Con liga', v.band]);
+  return `<div class="vids">${links.map(([t, q]) => `<a class="vid" href="${ytSearch(q)}" target="_blank" rel="noopener">${ICON_PLAY}${esc(t)}</a>`).join('')}</div>`;
+}
+
 function exCard(w, ex, wk) {
   const l = w.log[ex.id] || (w.log[ex.id] = blankLog(ex));
   const last = lastLog(ex.id, w);
@@ -353,6 +389,7 @@ function exCard(w, ex, wk) {
     <div class="ex-top"><span class="pat">${ex.pat}</span><span class="tgt">${targetText(ex)}</span></div>
     <h3>${esc(ex.name)}</h3>
     <details><summary>Técnica</summary><p>${esc(ex.tech)}</p></details>
+    ${videoLinks(ex, m)}
     <div class="lastbox">
       ${last ? `<span class="muted">Última vez (${fmtShort(last.date)}): <b>${esc(loadText(ex, last) || '—')}</b> · ${esc(setsText(ex, last))}</span>` : ''}
       <span class="hint">${esc(suggestion(ex, last, wk))}</span>
