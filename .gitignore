@@ -1,0 +1,4 @@
+# El PDF de la guía y la config local no se publican
+*.pdf
+.claude/
+.DS_Store
