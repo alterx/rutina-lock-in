@@ -1,3 +1,7 @@
+/* Fuentes guardadas en la app (funcionan sin internet): Fraunces con trazo suave para títulos, Nunito redondeada para el texto. */
+@font-face { font-family: "Fraunces Soft"; src: url("fonts/fraunces-soft.woff2") format("woff2"); font-weight: 500 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Nunito"; src: url("fonts/nunito.woff2") format("woff2"); font-weight: 400 700; font-style: normal; font-display: swap; }
+
 /* Siempre en modo claro, a propósito: pasteles suaves aunque el teléfono esté en oscuro.
    Layout: una columna tranquila tipo libreta; cada sesión tiene su propio tono pastel (rosa, lavanda, durazno) y el rucking, salvia. */
 :root {
@@ -18,8 +22,8 @@
   --tone: var(--blush);
   --tone-ink: var(--blush-ink);
 
-  --display: ui-rounded, "SF Pro Rounded", "Nunito", system-ui, sans-serif;
-  --body: ui-rounded, "SF Pro Rounded", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --display: "Fraunces Soft", Georgia, serif;
+  --body: "Nunito", ui-rounded, system-ui, -apple-system, sans-serif;
   --r: 22px;
   --tabs-h: 64px;
   color-scheme: light;
@@ -45,8 +49,8 @@ body::before {
   content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
   background: var(--bg); z-index: 30;
 }
-h1, h2, h3 { font-family: var(--display); line-height: 1.2; text-wrap: balance; margin: 0; font-weight: 650; }
-h1 { font-size: 1.6rem; letter-spacing: -0.01em; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.15; text-wrap: balance; margin: 0; font-weight: 600; font-optical-sizing: auto; }
+h1 { font-size: 1.75rem; letter-spacing: -0.005em; }
 h2 { font-size: 1.15rem; }
 h3 { font-size: 1.05rem; }
 p { margin: 0; }
@@ -76,7 +80,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
   padding-block: 14px 10px;
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
 }
-.brand { font-family: var(--display); font-weight: 650; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; white-space: nowrap; flex-shrink: 0; }
+.brand { font-family: var(--display); font-weight: 600; font-size: 1.15rem; display: flex; align-items: center; gap: 8px; white-space: nowrap; flex-shrink: 0; }
 .brand::before {
   content: ""; width: 18px; height: 18px; border-radius: 50%;
   background: conic-gradient(var(--blush) 0 33%, var(--lilac) 0 66%, var(--peach) 0);
@@ -144,7 +148,7 @@ input:focus, textarea:focus, select:focus { outline: none; border-color: var(--t
 .today .plan { color: var(--muted); }
 .weekstrip { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; background: var(--surface); border-radius: var(--r); padding: 10px 6px; box-shadow: var(--shadow); }
 .day { display: grid; justify-items: center; gap: 6px; padding: 4px 0; font-size: 0.75rem; color: var(--muted); }
-.day.is-today { color: var(--ink); font-weight: 650; }
+.day.is-today { color: var(--ink); font-weight: 600; }
 .day .dot { width: 30px; height: 30px; border-radius: 50%; background: var(--tone); display: grid; place-items: center; color: var(--tone-ink); opacity: .55; }
 .day.is-today .dot { opacity: 1; box-shadow: 0 0 0 2px var(--surface), 0 0 0 3.5px var(--tone-ink); }
 .day .dot.done { opacity: 1; }
@@ -226,7 +230,7 @@ details.card > summary { cursor: pointer; font-weight: 600; list-style-position:
   display: flex; align-items: center; gap: 10px; box-shadow: 0 10px 30px rgba(69, 57, 74, .12);
 }
 .timer-label { font-size: 0.85rem; }
-.timer-time { font-family: var(--display); font-weight: 650; font-size: 1.5rem; margin-right: auto; font-variant-numeric: tabular-nums; }
+.timer-time { font-family: var(--display); font-weight: 600; font-size: 1.5rem; margin-right: auto; font-variant-numeric: tabular-nums; }
 .timer .btn.ghost { color: inherit; box-shadow: inset 0 0 0 1.5px currentColor; opacity: .85; }
 .timer.done .timer-in { background: var(--sage); color: var(--sage-ink); }
 
@@ -241,7 +245,7 @@ details.card > summary { cursor: pointer; font-weight: 600; list-style-position:
 /* Progreso */
 .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 .tile { background: var(--tone); color: var(--tone-ink); border-radius: var(--r); padding: 14px; display: grid; gap: 2px; }
-.tile b { font-family: var(--display); font-size: 1.6rem; font-weight: 650; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.tile b { font-family: var(--display); font-size: 1.6rem; font-weight: 600; line-height: 1.1; font-variant-numeric: tabular-nums; }
 .tile span { font-size: 0.8rem; }
 .chart { width: 100%; height: auto; display: block; overflow: visible; }
 .chart .grid { stroke: var(--line); stroke-width: 1; stroke-dasharray: 2 4; }
